@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Dict, List, Optional
+from typing import Callable, Dict, List, Optional
 
 import networkx as nx
 
@@ -20,14 +20,30 @@ _STOP_WORDS: frozenset[str] = frozenset({
 
 
 class GraphBuilder:
-    def __init__(self, config) -> None:
+    """
+    Builds a NetworkX knowledge graph from passages.
+
+    Entity extraction strategy:
+      - LLM prompt via *llm_extractor* when Ollama is running (richer NER)
+      - Regex-based capitalized phrase extraction as silent fallback
+    """
+
+    def __init__(
+        self,
+        config,
+        llm_extractor: Optional[Callable[[str], List[str]]] = None,
+    ) -> None:
         self.config = config
+        self.llm_extractor = llm_extractor
         self.graph: nx.Graph = nx.Graph()
         self.nodes: Dict[str, Node] = {}
         self._entity_to_node_id: Dict[str, str] = {}
 
+    # ------------------------------------------------------------------ #
+    # Public API
+    # ------------------------------------------------------------------ #
+
     def build_from_passages(self, passages: List[Dict]) -> nx.Graph:
-        """Build a knowledge graph from a list of passage dicts."""
         passage_nodes: List[Node] = []
         for p in passages:
             node = Node(
@@ -73,12 +89,6 @@ class GraphBuilder:
 
         return self.graph
 
-    def _extract_entities(self, text: str) -> List[str]:
-        """Regex-based capitalized phrase extraction as lightweight NER."""
-        pattern = r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b"
-        matches = re.findall(pattern, text)
-        return list({m for m in matches if m not in _STOP_WORDS and len(m) > 2})
-
     def get_passage_nodes(self) -> List[Node]:
         return [n for n in self.nodes.values() if n.node_type == "passage"]
 
@@ -87,3 +97,24 @@ class GraphBuilder:
 
     def get_node(self, node_id: str) -> Optional[Node]:
         return self.nodes.get(node_id)
+
+    # ------------------------------------------------------------------ #
+    # Entity extraction
+    # ------------------------------------------------------------------ #
+
+    def _extract_entities(self, text: str) -> List[str]:
+        """Try LLM extraction first; fall back silently to regex on any error."""
+        if self.llm_extractor is not None:
+            try:
+                entities = self.llm_extractor(text)
+                if entities:
+                    return entities
+            except Exception:
+                pass
+        return self._regex_extract(text)
+
+    def _regex_extract(self, text: str) -> List[str]:
+        """Lightweight capitalized-phrase NER — no external dependencies."""
+        pattern = r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b"
+        matches = re.findall(pattern, text)
+        return list({m for m in matches if m not in _STOP_WORDS and len(m) > 2})

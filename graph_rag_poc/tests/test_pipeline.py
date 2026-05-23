@@ -3,7 +3,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import pytest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from config import Config
 from src.pipeline import GraphRAGPipeline
 
@@ -13,25 +13,31 @@ SAMPLE_PASSAGES = [
     {"id": "doc_3", "title": "Moon", "text": "The Moon is Earth's only natural satellite. Apollo missions landed humans there.", "source": "test"},
 ]
 
+
 @pytest.fixture
 def config():
     cfg = Config()
     cfg.top_k_passages = 2
     cfg.top_k_nodes = 3
     cfg.max_hops = 1
+    cfg.use_llm_entity_extraction = False  # force regex in tests
     return cfg
+
 
 @pytest.fixture
 def pipeline(config):
     return GraphRAGPipeline(config)
 
+
 def test_build_does_not_raise(pipeline):
     pipeline.build(SAMPLE_PASSAGES)
     assert pipeline._retriever is not None
 
+
 def test_query_raises_before_build(pipeline):
     with pytest.raises(RuntimeError, match="build"):
         pipeline.query("Who walked on the Moon?")
+
 
 def test_query_returns_expected_keys(pipeline):
     pipeline.build(SAMPLE_PASSAGES)
@@ -40,10 +46,32 @@ def test_query_returns_expected_keys(pipeline):
     for key in ("question", "answer", "context", "num_passages_retrieved"):
         assert key in result
 
+
 def test_passage_store_fully_populated(pipeline):
     pipeline.build(SAMPLE_PASSAGES)
     assert len(pipeline.passage_store) == len(SAMPLE_PASSAGES)
 
+
 def test_entity_store_is_populated(pipeline):
     pipeline.build(SAMPLE_PASSAGES)
     assert len(pipeline.entity_store) > 0
+
+
+def test_llm_extractor_is_used_when_ollama_running(config):
+    config.use_llm_entity_extraction = True
+    pipeline = GraphRAGPipeline(config)
+    mock_provider = MagicMock()
+    mock_provider.name = "ollama/llama3.2"
+    mock_provider.generate.return_value = "Neil Armstrong, Apollo 11, Moon"
+    with patch("src.pipeline.is_ollama_running", return_value=True), \
+         patch.object(pipeline.generator, "_get_provider", return_value=mock_provider):
+        pipeline.build(SAMPLE_PASSAGES)
+    assert mock_provider.generate.called
+
+
+def test_regex_fallback_used_when_ollama_absent(config):
+    config.use_llm_entity_extraction = True
+    pipeline = GraphRAGPipeline(config)
+    with patch("src.pipeline.is_ollama_running", return_value=False):
+        pipeline.build(SAMPLE_PASSAGES)
+    assert pipeline._retriever is not None
