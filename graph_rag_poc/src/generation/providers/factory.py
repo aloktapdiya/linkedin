@@ -25,7 +25,6 @@ def create_provider(config) -> LLMProvider:
     1. Ollama  (local, zero marginal cost)   <-- default
     2. Gemini  (remote, GEMINI_API_KEY)      <-- first remote fallback
     3. Claude  (remote, ANTHROPIC_API_KEY)   <-- last resort
-    4. Mock    (offline demo, allow_mock=True)
     """
     reasons: list[str] = []
 
@@ -77,17 +76,6 @@ def create_provider(config) -> LLMProvider:
         )
         return ClaudeProvider(config)
     reasons.append("Claude: no API key (set ANTHROPIC_API_KEY)")
-
-    # ------------------------------------------------------------------ #
-    # 4. Mock (offline demo — no LLM required)
-    # ------------------------------------------------------------------ #
-    if getattr(config, "allow_mock", False):
-        from .mock import MockProvider
-        print(
-            "[Provider] No inference engine available — using offline MockProvider.\n"
-            "           (set OLLAMA_MODEL / GEMINI_API_KEY / ANTHROPIC_API_KEY for real inference)"
-        )
-        return MockProvider()
 
     raise RuntimeError(
         "No inference engine available. Tried:\n"

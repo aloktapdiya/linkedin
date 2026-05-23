@@ -9,6 +9,7 @@ from .indexing.embedder import Embedder
 from .indexing.vector_store import VectorStore
 from .retrieval.graph_retriever import GraphRetriever
 
+# Prompt used when Ollama does LLM-based NER during graph construction
 _NER_PROMPT = (
     "Extract all named entities from the text below. "
     "Named entities include: people, places, organizations, products, and events.\n"
@@ -29,8 +30,12 @@ class GraphRAGPipeline:
         self.generator = Generator(config)
         self._retriever: Optional[GraphRetriever] = None
 
+    # ------------------------------------------------------------------ #
+    # LLM-based entity extraction (Ollama only — local & free)
+    # ------------------------------------------------------------------ #
+
     def _make_llm_extractor(self, provider) -> Callable[[str], List[str]]:
-        """Build an entity-extraction callable backed by an LLM prompt."""
+        """Return a callable that extracts entities via an LLM prompt."""
 
         def extract(text: str) -> List[str]:
             prompt = _NER_PROMPT.format(text=text)
@@ -43,29 +48,34 @@ class GraphRAGPipeline:
 
         return extract
 
+    # ------------------------------------------------------------------ #
+    # Build
+    # ------------------------------------------------------------------ #
+
     def build(self, passages: List[Dict[str, Any]]) -> None:
         """Index passages into the knowledge graph and vector stores."""
         print(f"[Pipeline] Building graph index from {len(passages)} passages ...")
 
+        # Decide entity extraction strategy
         llm_extractor: Optional[Callable[[str], List[str]]] = None
         if self.config.use_llm_entity_extraction and is_ollama_running(
             self.config.ollama_base_url
         ):
             provider = self.generator._get_provider()
-            print(f"[Pipeline] LLM entity extraction via {provider.name}")
+            print(f"[Pipeline] LLM entity extraction enabled via {provider.name}")
             llm_extractor = self._make_llm_extractor(provider)
         else:
-            print("[Pipeline] Regex entity extraction (Ollama not detected locally)")
+            print("[Pipeline] Using regex entity extraction (Ollama not detected)")
 
-        graph_builder = GraphBuilder(self.config, llm_extractor=llm_extractor)
-        graph = graph_builder.build_from_passages(passages)
-        nodes = graph_builder.nodes
+        self._graph_builder = GraphBuilder(self.config, llm_extractor=llm_extractor)
+        graph = self._graph_builder.build_from_passages(passages)
+        nodes = self._graph_builder.nodes
         print(
             f"[Pipeline]   Graph: {graph.number_of_nodes()} nodes, "
             f"{graph.number_of_edges()} edges"
         )
 
-        passage_nodes = graph_builder.get_passage_nodes()
+        passage_nodes = self._graph_builder.get_passage_nodes()
         if passage_nodes:
             embs = self.embedder.embed([n.text for n in passage_nodes])
             for node, emb in zip(passage_nodes, embs):
@@ -73,7 +83,7 @@ class GraphRAGPipeline:
                 self.passage_store.add(node.id, emb, metadata=node.metadata)
         print(f"[Pipeline]   Indexed {len(passage_nodes)} passage nodes.")
 
-        entity_nodes = graph_builder.get_entity_nodes()
+        entity_nodes = self._graph_builder.get_entity_nodes()
         if entity_nodes:
             embs = self.embedder.embed([n.text for n in entity_nodes])
             for node, emb in zip(entity_nodes, embs):
@@ -90,6 +100,10 @@ class GraphRAGPipeline:
             config=self.config,
         )
         print("[Pipeline] Build complete.")
+
+    # ------------------------------------------------------------------ #
+    # Query
+    # ------------------------------------------------------------------ #
 
     def query(self, question: str) -> Dict[str, Any]:
         if self._retriever is None:

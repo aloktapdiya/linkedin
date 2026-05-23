@@ -63,15 +63,6 @@ class Config:
     benchmark_subset_size: int = 20
 
     # -------------------------------------------------------------------
-    # Offline / demo mode
-    # -------------------------------------------------------------------
-    # True  → use keyword MockProvider when no real LLM is reachable
-    # False → raise an error instead (production default)
-    allow_mock: bool = field(
-        default_factory=lambda: os.getenv("ALLOW_MOCK", "false").lower() == "true"
-    )
-
-    # -------------------------------------------------------------------
     # Paths
     # -------------------------------------------------------------------
     data_dir: str = "data"
