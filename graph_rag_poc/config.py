@@ -33,7 +33,7 @@ class Config:
     claude_model: str = "claude-sonnet-4-6"
 
     # -------------------------------------------------------------------
-    # Embedding (always local via sentence-transformers, unaffected by LLM)
+    # Embedding (sentence-transformers preferred; TF-IDF fallback if offline)
     # -------------------------------------------------------------------
     embedding_model: str = "all-MiniLM-L6-v2"
     embedding_dim: int = 384
@@ -61,6 +61,15 @@ class Config:
     # Benchmark
     # -------------------------------------------------------------------
     benchmark_subset_size: int = 20
+
+    # -------------------------------------------------------------------
+    # Offline / demo mode
+    # -------------------------------------------------------------------
+    # True  → use keyword MockProvider when no real LLM is reachable
+    # False → raise an error instead (production default)
+    allow_mock: bool = field(
+        default_factory=lambda: os.getenv("ALLOW_MOCK", "false").lower() == "true"
+    )
 
     # -------------------------------------------------------------------
     # Paths

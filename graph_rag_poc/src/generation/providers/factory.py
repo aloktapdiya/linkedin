@@ -25,17 +25,15 @@ def create_provider(config) -> LLMProvider:
     1. Ollama  (local, zero marginal cost)   <-- default
     2. Gemini  (remote, GEMINI_API_KEY)      <-- first remote fallback
     3. Claude  (remote, ANTHROPIC_API_KEY)   <-- last resort
+    4. Mock    (offline demo, allow_mock=True)
     """
-    from .ollama import OllamaProvider
-    from .gemini import GeminiProvider
-    from .claude import ClaudeProvider
-
     reasons: list[str] = []
 
     # ------------------------------------------------------------------ #
     # 1. Ollama
     # ------------------------------------------------------------------ #
     if is_ollama_running(config.ollama_base_url):
+        from .ollama import OllamaProvider
         print(
             f"[Provider] Ollama detected at {config.ollama_base_url} — "
             f"using model '{config.ollama_model}'"
@@ -54,6 +52,7 @@ def create_provider(config) -> LLMProvider:
     if gemini_key:
         config.gemini_api_key = gemini_key
         try:
+            from .gemini import GeminiProvider
             provider = GeminiProvider(config)
             print(
                 f"[Provider] Ollama unavailable — falling back to Gemini "
@@ -70,6 +69,7 @@ def create_provider(config) -> LLMProvider:
     # ------------------------------------------------------------------ #
     anthropic_key = config.anthropic_api_key or os.getenv("ANTHROPIC_API_KEY", "")
     if anthropic_key:
+        from .claude import ClaudeProvider
         config.anthropic_api_key = anthropic_key
         print(
             f"[Provider] Gemini unavailable — falling back to Claude "
@@ -77,6 +77,17 @@ def create_provider(config) -> LLMProvider:
         )
         return ClaudeProvider(config)
     reasons.append("Claude: no API key (set ANTHROPIC_API_KEY)")
+
+    # ------------------------------------------------------------------ #
+    # 4. Mock (offline demo — no LLM required)
+    # ------------------------------------------------------------------ #
+    if getattr(config, "allow_mock", False):
+        from .mock import MockProvider
+        print(
+            "[Provider] No inference engine available — using offline MockProvider.\n"
+            "           (set OLLAMA_MODEL / GEMINI_API_KEY / ANTHROPIC_API_KEY for real inference)"
+        )
+        return MockProvider()
 
     raise RuntimeError(
         "No inference engine available. Tried:\n"
