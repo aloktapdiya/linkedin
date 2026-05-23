@@ -13,7 +13,7 @@ class Config:
         default_factory=lambda: os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
     )
     ollama_model: str = field(
-        default_factory=lambda: os.getenv("OLLAMA_MODEL", "gemma4:latest")
+        default_factory=lambda: os.getenv("OLLAMA_MODEL", "llama3.2:1b")
     )
 
     # 2. Gemini — first remote fallback
@@ -42,7 +42,6 @@ class Config:
     # Graph construction
     # -------------------------------------------------------------------
     min_edge_weight: float = 0.3
-    # Use LLM prompts for NER during graph build when Ollama is available
     use_llm_entity_extraction: bool = True
 
     # -------------------------------------------------------------------
