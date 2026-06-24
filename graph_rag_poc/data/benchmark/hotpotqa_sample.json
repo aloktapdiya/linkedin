@@ -1,0 +1,382 @@
+[
+  {
+    "id": "sample_001",
+    "question": "Were Scott Derrickson and Ed Wood both American directors?",
+    "answer": "yes",
+    "type": "comparison",
+    "context": {
+      "Scott Derrickson": [
+        "Scott Derrickson (born July 16, 1966) is an American director, screenwriter and producer.",
+        "He is best known for directing horror films such as Sinister and Doctor Strange for Marvel Studios.",
+        "Derrickson was born and raised in Denver, Colorado, United States."
+      ],
+      "Ed Wood": [
+        "Edward Davis Wood Jr. (October 10, 1924 – December 10, 1978) was an American filmmaker, actor, and author.",
+        "He is often cited as one of the worst directors in Hollywood history.",
+        "Wood was born in Poughkeepsie, New York, United States."
+      ]
+    },
+    "supporting_facts": [["Scott Derrickson", 0], ["Ed Wood", 0]]
+  },
+  {
+    "id": "sample_002",
+    "question": "What is the capital city of the country where the Eiffel Tower is located?",
+    "answer": "Paris",
+    "type": "bridge",
+    "context": {
+      "Eiffel Tower": [
+        "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France.",
+        "It was constructed from 1887 to 1889 as the centerpiece of the 1889 World's Fair.",
+        "The tower is 330 metres tall and was designed by Gustave Eiffel."
+      ],
+      "France": [
+        "France, officially the French Republic, is a country in Western Europe.",
+        "Its capital and largest city is Paris, which is also the most populous city in France.",
+        "France is a unitary semi-presidential republic."
+      ]
+    },
+    "supporting_facts": [["Eiffel Tower", 0], ["France", 1]]
+  },
+  {
+    "id": "sample_003",
+    "question": "What year was the author of the dystopian novel '1984' born?",
+    "answer": "1903",
+    "type": "bridge",
+    "context": {
+      "Nineteen Eighty-Four": [
+        "Nineteen Eighty-Four, often referred to as 1984, is a dystopian social science fiction novel by George Orwell.",
+        "It was published on 8 June 1949 by Secker and Warburg.",
+        "The novel is set in a totalitarian superstate called Oceania."
+      ],
+      "George Orwell": [
+        "George Orwell (25 June 1903 – 21 January 1950) was an English novelist, essayist, journalist, and critic.",
+        "His work is characterised by lucid prose, social criticism, and opposition to totalitarianism.",
+        "Orwell was born Eric Arthur Blair in Motihari, Bengal Presidency, British India."
+      ]
+    },
+    "supporting_facts": [["Nineteen Eighty-Four", 0], ["George Orwell", 0]]
+  },
+  {
+    "id": "sample_004",
+    "question": "Who was the first astronaut to walk on the Moon?",
+    "answer": "Neil Armstrong",
+    "type": "factoid",
+    "context": {
+      "Apollo 11": [
+        "Apollo 11 was the American spaceflight that first landed humans on the Moon.",
+        "Commander Neil Armstrong and lunar module pilot Buzz Aldrin landed the Apollo Lunar Module Eagle on July 20, 1969.",
+        "Neil Armstrong became the first person to step onto the lunar surface on July 21, 1969."
+      ],
+      "Neil Armstrong": [
+        "Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and aeronautical engineer.",
+        "He was the first person to walk on the Moon, doing so during the Apollo 11 mission on July 21, 1969.",
+        "Armstrong served as a naval aviator before joining NASA."
+      ]
+    },
+    "supporting_facts": [["Apollo 11", 2], ["Neil Armstrong", 1]]
+  },
+  {
+    "id": "sample_005",
+    "question": "What nationality is the director of the film Inception?",
+    "answer": "British",
+    "type": "bridge",
+    "context": {
+      "Inception": [
+        "Inception is a 2010 science fiction action film written and directed by Christopher Nolan.",
+        "It was produced by Emma Thomas and Christopher Nolan.",
+        "The film stars Leonardo DiCaprio as a professional thief who steals information by entering the subconscious mind."
+      ],
+      "Christopher Nolan": [
+        "Christopher Edward Nolan CBE (born 30 July 1970) is a British-American film director, producer, and screenwriter.",
+        "He was born in Westminster, London, England and holds dual British and American citizenship.",
+        "Nolan is best known for his science fiction and action films."
+      ]
+    },
+    "supporting_facts": [["Inception", 0], ["Christopher Nolan", 0]]
+  },
+  {
+    "id": "sample_006",
+    "question": "In which city is the headquarters of the company that created the iPhone?",
+    "answer": "Cupertino",
+    "type": "bridge",
+    "context": {
+      "iPhone": [
+        "The iPhone is a line of smartphones designed and marketed by Apple Inc.",
+        "The first generation iPhone was announced by then-Apple CEO Steve Jobs on January 9, 2007.",
+        "iPhone runs Apple's iOS mobile operating system."
+      ],
+      "Apple Inc.": [
+        "Apple Inc. is an American multinational technology company headquartered in Cupertino, California.",
+        "It was founded by Steve Jobs, Steve Wozniak, and Ronald Wayne in April 1976.",
+        "Apple designs, develops, and sells consumer electronics, computer software, and online services."
+      ]
+    },
+    "supporting_facts": [["iPhone", 0], ["Apple Inc.", 0]]
+  },
+  {
+    "id": "sample_007",
+    "question": "What sport does the athlete nicknamed King James play professionally?",
+    "answer": "basketball",
+    "type": "bridge",
+    "context": {
+      "LeBron James": [
+        "LeBron Raymone James Sr. (born December 30, 1984) is an American professional basketball player.",
+        "He is widely considered one of the greatest basketball players of all time.",
+        "LeBron James is nicknamed King James and plays for the Los Angeles Lakers in the NBA."
+      ],
+      "National Basketball Association": [
+        "The National Basketball Association (NBA) is a professional basketball league in North America.",
+        "It is composed of 30 teams and is one of the major professional sports leagues in the United States.",
+        "NBA players are considered the best basketball players in the world."
+      ]
+    },
+    "supporting_facts": [["LeBron James", 0], ["LeBron James", 2]]
+  },
+  {
+    "id": "sample_008",
+    "question": "What is the largest planet in our solar system?",
+    "answer": "Jupiter",
+    "type": "factoid",
+    "context": {
+      "Jupiter": [
+        "Jupiter is the fifth planet from the Sun and the largest in the Solar System.",
+        "It is a gas giant with a mass more than two and a half times that of all the other planets in the Solar System combined.",
+        "Jupiter's iconic Great Red Spot is a giant storm that has been ongoing for hundreds of years."
+      ],
+      "Solar System": [
+        "The Solar System is the gravitationally bound system of the Sun and the objects that orbit it.",
+        "The eight planets in order from the Sun are Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune.",
+        "Jupiter and Saturn are the two largest planets, with Jupiter being the biggest."
+      ]
+    },
+    "supporting_facts": [["Jupiter", 0], ["Solar System", 2]]
+  },
+  {
+    "id": "sample_009",
+    "question": "Who wrote the play that contains the line 'To be, or not to be'?",
+    "answer": "William Shakespeare",
+    "type": "bridge",
+    "context": {
+      "Hamlet": [
+        "Hamlet is a tragedy written by William Shakespeare, believed to have been written between 1599 and 1601.",
+        "The play's famous soliloquy begins with the line 'To be, or not to be, that is the question.'",
+        "Hamlet is considered one of Shakespeare's greatest works and one of the most influential tragedies in literature."
+      ],
+      "William Shakespeare": [
+        "William Shakespeare (bapt. 26 April 1564 – 23 April 1616) was an English playwright, poet, and actor.",
+        "He is widely regarded as the greatest writer in the English language and the world's greatest dramatist.",
+        "Shakespeare wrote approximately 37 plays, 154 sonnets, and several longer poems."
+      ]
+    },
+    "supporting_facts": [["Hamlet", 0], ["William Shakespeare", 0]]
+  },
+  {
+    "id": "sample_010",
+    "question": "What is the official currency of Japan?",
+    "answer": "Japanese yen",
+    "type": "factoid",
+    "context": {
+      "Japan": [
+        "Japan is an island country in East Asia, located in the northwest Pacific Ocean.",
+        "It is a highly developed country with the third-largest economy in the world.",
+        "The official currency of Japan is the Japanese yen."
+      ],
+      "Japanese yen": [
+        "The Japanese yen is the official currency of Japan.",
+        "The yen is the third most traded currency in the foreign exchange market after the US dollar and euro.",
+        "The Bank of Japan is responsible for issuing and managing the yen."
+      ]
+    },
+    "supporting_facts": [["Japan", 2], ["Japanese yen", 0]]
+  },
+  {
+    "id": "sample_011",
+    "question": "In what year did the Second World War end?",
+    "answer": "1945",
+    "type": "factoid",
+    "context": {
+      "World War II": [
+        "World War II or the Second World War was a global conflict that lasted from 1939 to 1945.",
+        "It involved the vast majority of the world's countries forming two opposing military alliances: the Allies and the Axis.",
+        "The war ended in 1945 with the total victory of the Allies over Germany and Japan."
+      ],
+      "Victory over Japan Day": [
+        "Victory over Japan Day marks the date on which Imperial Japan surrendered in World War II.",
+        "The surrender occurred on August 15, 1945, effectively ending World War II.",
+        "The formal surrender documents were signed aboard the USS Missouri on September 2, 1945."
+      ]
+    },
+    "supporting_facts": [["World War II", 0], ["Victory over Japan Day", 1]]
+  },
+  {
+    "id": "sample_012",
+    "question": "Who is credited with inventing the telephone?",
+    "answer": "Alexander Graham Bell",
+    "type": "factoid",
+    "context": {
+      "Telephone": [
+        "The telephone is a telecommunications device that permits two or more users to conduct a conversation.",
+        "Alexander Graham Bell is credited as the inventor of the telephone.",
+        "The first successful telephone transmission took place on March 10, 1876."
+      ],
+      "Alexander Graham Bell": [
+        "Alexander Graham Bell (March 3, 1847 – August 2, 1922) was a Scottish-American inventor and scientist.",
+        "He is credited with inventing and patenting the first practical telephone.",
+        "Bell also worked on optical telecommunications, hydrofoils, and aeronautics."
+      ]
+    },
+    "supporting_facts": [["Telephone", 1], ["Alexander Graham Bell", 1]]
+  },
+  {
+    "id": "sample_013",
+    "question": "What is the chemical symbol for gold?",
+    "answer": "Au",
+    "type": "factoid",
+    "context": {
+      "Gold": [
+        "Gold is a chemical element with the symbol Au (from Latin: aurum) and atomic number 79.",
+        "It is a bright, slightly orange-yellow, dense, soft, malleable, and ductile metal in pure form.",
+        "Gold has been used throughout history as currency and in jewelry making."
+      ],
+      "Periodic table": [
+        "The periodic table is a tabular arrangement of the chemical elements organized by atomic number.",
+        "Gold appears in Group 11 and Period 6 of the periodic table.",
+        "The symbol Au comes from the Latin word aurum meaning gold."
+      ]
+    },
+    "supporting_facts": [["Gold", 0], ["Periodic table", 2]]
+  },
+  {
+    "id": "sample_014",
+    "question": "Who painted the Mona Lisa?",
+    "answer": "Leonardo da Vinci",
+    "type": "factoid",
+    "context": {
+      "Mona Lisa": [
+        "The Mona Lisa is a half-length portrait painting by Italian artist Leonardo da Vinci.",
+        "It is considered an archetypal masterpiece of the Italian Renaissance.",
+        "The painting is housed in the Louvre Museum in Paris, France."
+      ],
+      "Leonardo da Vinci": [
+        "Leonardo di ser Piero da Vinci (15 April 1452 – 2 May 1519) was an Italian Renaissance polymath.",
+        "He is widely considered one of the greatest painters in history.",
+        "Leonardo created some of the most influential works of the Renaissance, including the Mona Lisa and The Last Supper."
+      ]
+    },
+    "supporting_facts": [["Mona Lisa", 0], ["Leonardo da Vinci", 2]]
+  },
+  {
+    "id": "sample_015",
+    "question": "What is the tallest mountain in the world above sea level?",
+    "answer": "Mount Everest",
+    "type": "factoid",
+    "context": {
+      "Mount Everest": [
+        "Mount Everest is Earth's highest mountain above sea level, located in the Mahalangur Himal sub-range of the Himalayas.",
+        "The China-Nepal border runs across its summit point.",
+        "Mount Everest stands at 8,848.86 metres (29,031.7 ft) above sea level."
+      ],
+      "Himalayas": [
+        "The Himalayas is a mountain range in Asia separating the plains of the Indian subcontinent from the Tibetan Plateau.",
+        "The range has many of Earth's highest peaks, including the highest, Mount Everest.",
+        "The Himalayan range includes over fifty mountains exceeding 7,200 metres in elevation."
+      ]
+    },
+    "supporting_facts": [["Mount Everest", 0], ["Himalayas", 1]]
+  },
+  {
+    "id": "sample_016",
+    "question": "Who is the author of the Harry Potter book series?",
+    "answer": "J.K. Rowling",
+    "type": "factoid",
+    "context": {
+      "Harry Potter": [
+        "Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling.",
+        "The novels chronicle the lives of a young wizard, Harry Potter, and his friends at Hogwarts School of Witchcraft and Wizardry.",
+        "The first novel, Harry Potter and the Philosopher's Stone, was published on 26 June 1997."
+      ],
+      "J. K. Rowling": [
+        "Joanne Rowling CH OBE (born 31 July 1965), known by her pen name J. K. Rowling, is a British author.",
+        "She wrote the Harry Potter fantasy series, which has sold more than 500 million copies worldwide.",
+        "Rowling began writing the Harry Potter series in a cafe in Edinburgh, Scotland."
+      ]
+    },
+    "supporting_facts": [["Harry Potter", 0], ["J. K. Rowling", 1]]
+  },
+  {
+    "id": "sample_017",
+    "question": "What is the largest ocean on Earth?",
+    "answer": "Pacific Ocean",
+    "type": "factoid",
+    "context": {
+      "Pacific Ocean": [
+        "The Pacific Ocean is the largest and deepest of Earth's five oceanic divisions.",
+        "It extends from the Arctic Ocean in the north to the Southern Ocean in the south.",
+        "The Pacific Ocean covers an area of about 165.25 million square kilometres."
+      ],
+      "World Ocean": [
+        "The World Ocean is the interconnected system of all the Earth's oceanic waters.",
+        "It is divided into five principal oceanic areas: the Pacific, Atlantic, Indian, Southern, and Arctic Oceans.",
+        "The Pacific Ocean is the largest, followed by the Atlantic Ocean."
+      ]
+    },
+    "supporting_facts": [["Pacific Ocean", 0], ["World Ocean", 2]]
+  },
+  {
+    "id": "sample_018",
+    "question": "In which South American country is the majority of the Amazon rainforest located?",
+    "answer": "Brazil",
+    "type": "bridge",
+    "context": {
+      "Amazon rainforest": [
+        "The Amazon rainforest is a moist broadleaf tropical rainforest in the Amazon biome that covers most of the Amazon basin.",
+        "The majority of the forest is contained within Brazil, with 60% of the rainforest in that country.",
+        "The remaining areas are in Peru (13%), Colombia (10%), and other South American countries."
+      ],
+      "Brazil": [
+        "Brazil, officially the Federative Republic of Brazil, is the largest country in both South America and Latin America.",
+        "It is home to the Amazon River and a significant portion of the Amazon rainforest.",
+        "Brazil's capital is Brasilia, and its most populous city is Sao Paulo."
+      ]
+    },
+    "supporting_facts": [["Amazon rainforest", 1], ["Brazil", 1]]
+  },
+  {
+    "id": "sample_019",
+    "question": "What is the atomic number of the element carbon?",
+    "answer": "6",
+    "type": "factoid",
+    "context": {
+      "Carbon": [
+        "Carbon is a chemical element with the symbol C and atomic number 6.",
+        "It is nonmetallic and tetravalent, meaning that its atoms are able to form up to four covalent bonds.",
+        "Carbon is the 15th most abundant element in the Earth's crust."
+      ],
+      "Organic chemistry": [
+        "Organic chemistry is a branch of chemistry that studies carbon-containing compounds.",
+        "Carbon's atomic number is 6, which means it has 6 protons in its nucleus.",
+        "Carbon forms the basis of all known life on Earth."
+      ]
+    },
+    "supporting_facts": [["Carbon", 0], ["Organic chemistry", 1]]
+  },
+  {
+    "id": "sample_020",
+    "question": "Which organization maintains and develops the Python programming language?",
+    "answer": "Python Software Foundation",
+    "type": "bridge",
+    "context": {
+      "Python (programming language)": [
+        "Python is a high-level, general-purpose programming language.",
+        "Its design philosophy emphasizes code readability with the use of significant indentation.",
+        "Python was created by Guido van Rossum and first released in 1991."
+      ],
+      "Python Software Foundation": [
+        "The Python Software Foundation (PSF) is an American nonprofit organization devoted to the Python programming language.",
+        "The PSF is responsible for the development and maintenance of CPython, the reference implementation of Python.",
+        "The foundation was established in 2001 to manage the Python programming language and community resources."
+      ]
+    },
+    "supporting_facts": [["Python (programming language)", 2], ["Python Software Foundation", 0]]
+  }
+]
